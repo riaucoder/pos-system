@@ -1,0 +1,26 @@
+{
+    "name": "riaucoder/pos-system",
+    "description": "Aplikasi Penjualan Online dan Offline, Pencatatan Transaksi Penjualan",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Riaucoder\\PosSystem\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Riaucoder\\PosSystem\\PosServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Edo Pranata",
+            "email": "edo.pranata@hotmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
