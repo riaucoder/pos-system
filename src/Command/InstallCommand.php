@@ -3,6 +3,7 @@
 namespace Riaucoder\PosSystem\Command;
 
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use RuntimeException;
 use Symfony\Component\Process\Process;
@@ -12,7 +13,7 @@ class InstallCommand extends Command
     use InstallWithVue;
 
     protected $signature = 'riaucoder:auth {stack=vue : The development stack that should be installed (vue)}
-                            {--vue : Indicate that the Vue Inertia stack should be installed (Deprecated)}
+                            {--pest : Indicate that Pest should be installed}
                             {--composer=global : Absolute path to the Composer binary which should be used to install packages}';
 
     protected $description = 'Install the Riau Coder Pos System controllers and resources';
@@ -30,6 +31,22 @@ class InstallCommand extends Command
         return 1;
     }
 
+    protected function installTests()
+    {
+        (new Filesystem)->ensureDirectoryExists(base_path('tests/Feature/Auth'));
+
+        $stubStack = $this->argument('stack') === 'api' ? 'api' : 'default';
+
+        if ($this->option('pest')) {
+            $this->requireComposerPackages('pestphp/pest:^1.16', 'pestphp/pest-plugin-laravel:^1.1');
+
+            (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/'.$stubStack.'/pest-tests/Feature', base_path('tests/Feature/Auth'));
+            (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/'.$stubStack.'/pest-tests/Unit', base_path('tests/Unit'));
+            (new Filesystem)->copy(__DIR__.'/../../stubs/'.$stubStack.'/pest-tests/Pest.php', base_path('tests/Pest.php'));
+        } else {
+            (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/'.$stubStack.'/tests/Feature', base_path('tests/Feature/Auth'));
+        }
+    }
 
     protected function requireComposerPackages($packages)
     {
