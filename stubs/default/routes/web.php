@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -22,9 +21,11 @@ Route::middleware('guest')->group(function () {
     });
 });
 
-Route::middleware(['auth', 'verified', 'password.confirm'])->group(function (){
-    Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function (){
-        Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('index');
+Route::middleware(['auth'])->group(function (){
+    Route::middleware(['verified', 'password.confirm'])->group(function (){
+        Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function (){
+            Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('index');
+        });
     });
 
     // Authenticate Route
