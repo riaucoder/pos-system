@@ -54,22 +54,20 @@ trait InstallWithVue
         (new Filesystem)->ensureDirectoryExists(resource_path('js/Components'));
         (new Filesystem)->ensureDirectoryExists(resource_path('js/Layouts'));
         (new Filesystem)->ensureDirectoryExists(resource_path('js/Pages'));
+        (new Filesystem)->ensureDirectoryExists(resource_path('js/Shared'));
 
         (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/inertia-vue/resources/js/Components', resource_path('js/Components'));
         (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/inertia-vue/resources/js/Layouts', resource_path('js/Layouts'));
         (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/inertia-vue/resources/js/Pages', resource_path('js/Pages'));
+        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/inertia-vue/resources/js/Shared', resource_path('js/Shared'));
 
         // Tests...
         $this->installTests();
 
         // Routes...
-        copy(__DIR__.'/../../stubs/inertia-common/routes/web.php', base_path('routes/web.php'));
-        copy(__DIR__.'/../../stubs/inertia-common/routes/auth.php', base_path('routes/auth.php'));
-//
-        // "Dashboard" Route...
-        $this->replaceInFile('/home', '/dashboard', resource_path('js/Pages/Welcome.vue'));
-        $this->replaceInFile('Home', 'Dashboard', resource_path('js/Pages/Welcome.vue'));
-        $this->replaceInFile('/home', '/dashboard', app_path('Providers/RouteServiceProvider.php'));
+
+//        $this->replaceInFile('/home', '/dashboard', resource_path('js/Pages/Welcome.vue'));
+//        $this->replaceInFile('Home', 'Dashboard', resource_path('js/Pages/Welcome.vue'));
 
         // Tailwind / Vite...
         copy(__DIR__.'/../../stubs/default/resources/css/app.css', resource_path('css/app.css'));
@@ -87,6 +85,10 @@ trait InstallWithVue
 
         $this->line('');
         $this->components->info('Breeze scaffolding installed successfully.');
+
+        copy(__DIR__.'/../../stubs/default/routes/web.php', base_path('routes/web.php'));
+        $this->replaceInFile('/home', '/dashboard', app_path('Providers/RouteServiceProvider.php'));
+
     }
 
 }

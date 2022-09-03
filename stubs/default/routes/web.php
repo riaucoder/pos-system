@@ -35,12 +35,9 @@ Route::middleware(['auth', 'verified', 'password.confirm'])->group(function (){
     });
 
     Route::group(['prefix' => 'confirm-password'], function (){
-        Route::get('', [\App\Http\Controllers\Auth\ConfirmablePasswordController::class, 'show'])->name('password.confirm');
-        Route::post('', [\App\Http\Controllers\Auth\ConfirmablePasswordController::class, 'store']);
+        Route::get('/', [\App\Http\Controllers\Auth\ConfirmablePasswordController::class, 'show'])->name('password.confirm');
+        Route::post('/', [\App\Http\Controllers\Auth\ConfirmablePasswordController::class, 'store']);
     });
 
     Route::post('logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
-
-
-require __DIR__.'/auth.php';

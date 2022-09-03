@@ -22,5 +22,14 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "conflict": {
+        "laravel/framework": "<9.19.0"
+    },
+    "require": {
+        "php": "^8.0.2",
+        "illuminate/console": "^9.21",
+        "illuminate/filesystem": "^9.21",
+        "illuminate/support": "^9.21",
+        "illuminate/validation": "^9.21"
+    }
 }
